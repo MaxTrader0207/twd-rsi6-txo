@@ -1,7 +1,40 @@
 {
- "last_scanned": "2026-11-19",
+ "last_scanned": "2026-11-23",
+ "fx": {
+  "date": "2026-11-23",
+  "close": 32.9546,
+  "raw": 32.9546012878418,
+  "rsi": 59.15,
+  "rsi_prev": 71.04,
+  "signal": null,
+  "put_level": 33.3267,
+  "call_level": 32.2561
+ },
+ "week": {
+  "end": "2026-11-20",
+  "rsi": 87.78,
+  "rsi_prev": 86.44,
+  "dir": "up"
+ },
  "version": "v1.0",
- "updated_at": "2026-11-23 16:40",
- "mode": "seed",
- "note": "由回測資料初始化；第一次 Actions 執行後會更新即時欄位"
+ "updated_at": "2026-11-24 10:57",
+ "mode": "backfill",
+ "params": {
+  "rsi_n": 6,
+  "up": 80,
+  "dn": 20,
+  "lots": 2,
+  "slip": 4,
+  "fee": 35,
+  "tax": 0.001,
+  "mult": 50,
+  "start": "2021-11-22"
+ },
+ "counts": {
+  "pending": 0,
+  "open": 0,
+  "settled": 131,
+  "skipped": 0,
+  "merged": 2
+ }
 }
