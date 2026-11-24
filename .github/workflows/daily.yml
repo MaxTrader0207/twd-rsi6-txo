@@ -1,0 +1,48 @@
+name: daily
+
+on:
+  schedule:
+    - cron: "5 0 * * 1-5"    # 台北 08:05：產生訊號（signal + update）
+    - cron: "40 8 * * 1-5"   # 台北 16:40：補進場開盤價、結算（update）
+    - cron: "40 11 * * 1-5"  # 台北 19:40：重試 update（期交所資料延遲時）
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "signal / update / daily / backfill"
+        default: "daily"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-update
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Decide mode
+        id: m
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event.schedule }}" = "5 0 * * 1-5" ]; then
+            echo "mode=daily" >> $GITHUB_OUTPUT
+          else
+            echo "mode=update" >> $GITHUB_OUTPUT
+          fi
+      - run: python backend/run.py ${{ steps.m.outputs.mode }}
+      - name: Commit data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          git diff --cached --quiet || git commit -m "data: ${{ steps.m.outputs.mode }} $(TZ=Asia/Taipei date '+%Y-%m-%d %H:%M')"
+          git push

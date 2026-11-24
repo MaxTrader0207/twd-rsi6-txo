@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>台幣 RSI(6) × TXO 週選｜v1.0</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>台幣 RSI(6) × 台指週選買方 <span class="ver">v1.0 凍結版</span></h1>
+    <div class="sub" id="upd">載入中…</div>
+  </div>
+</header>
+
+<main>
+  <section class="grid2">
+    <div class="card" id="today">
+      <h2>今日訊號</h2>
+      <div id="sigbox" class="sigbox"></div>
+      <div class="kv" id="fxkv"></div>
+    </div>
+    <div class="card">
+      <h2>待進場 / 持倉中</h2>
+      <div id="positions"></div>
+    </div>
+  </section>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="card">
+    <div class="tabs" id="chartTabs">
+      <button data-c="eq" class="on">累積損益</button>
+      <button data-c="rsi">日線 RSI(6)</button>
+      <button data-c="wk">週線 RSI(6)</button>
+    </div>
+    <canvas id="chart" height="300"></canvas>
+  </section>
+
+  <section class="grid2">
+    <div class="card"><h2>年度損益</h2><div id="years"></div></div>
+    <div class="card"><h2>樣本內外／方向</h2><div id="split"></div></div>
+  </section>
+
+  <section class="card">
+    <h2>交易明細 <select id="flt"><option value="all">全部</option><option value="P">Buy Put</option><option value="C">Buy Call</option><option value="live">未結算</option></select></h2>
+    <div class="tblwrap"><table id="trades"></table></div>
+  </section>
+
+  <section class="card rules">
+    <h2>策略規則（v1.0）</h2>
+    <ol>
+      <li><b>資料：</b>Yahoo Finance 美元/台幣（TWD=X）日線，與前後各 2 根中位數差距 &gt;1% 視為錯價並以中位數取代。訊號於台北時間 08:05 以前一日完整日 K 計算。</li>
+      <li><b>指標：</b>RSI(6)，三竹算法（威爾德平滑）。週線以每週最後一個交易日收盤計算。</li>
+      <li><b>Buy Put：</b>日線 RSI(6) &gt; 80，且上一個完整週的週線 RSI(6) 比再前一週高（上揚）。</li>
+      <li><b>Buy Call：</b>日線 RSI(6) &lt; 20，且上一個完整週的週線 RSI(6) 比再前一週低（下彎）。</li>
+      <li><b>進場：</b>訊號日之後第一個台股交易日，期交所 TXO 一般時段開盤價。多個訊號對應同一進場日只取最新訊號。</li>
+      <li><b>合約：</b>進場日之後最近的週三到期（週選 W 或月選）；進場日即週三改用下週三；不用週五 F 系列。</li>
+      <li><b>履約價：</b>以加權指數開盤價找價平，再取價外一檔（Put 往下、Call 往上）。開盤無成交則不進場。</li>
+      <li><b>出場：</b>持有到結算，依期交所最後結算價。</li>
+      <li><b>口數與成本：</b>每筆固定 2 口；滑價 4 點/口；手續費單邊 NT$35（歸零不計平倉費）；期交稅 0.1%。</li>
+    </ol>
+  </section>
+</main>
+<footer>資料來源：Yahoo Finance、臺灣證券交易所、臺灣期貨交易所。僅供研究，非投資建議。</footer>
+<script src="app.js"></script>
+</body>
+</html>
