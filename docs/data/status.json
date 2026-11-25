@@ -17,8 +17,8 @@
   "dir": "up"
  },
  "version": "v1.0",
- "updated_at": "2026-11-25 16:14",
- "mode": "daily",
+ "updated_at": "2026-11-26 02:50",
+ "mode": "update",
  "params": {
   "rsi_n": 6,
   "up": 80,
