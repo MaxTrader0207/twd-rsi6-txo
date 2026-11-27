@@ -1,14 +1,14 @@
 {
- "last_scanned": "2026-11-25",
+ "last_scanned": "2026-11-26",
  "fx": {
-  "date": "2026-11-25",
-  "close": 32.921,
-  "raw": 32.92100143432617,
-  "rsi": 54.2,
-  "rsi_prev": 45.59,
+  "date": "2026-11-26",
+  "close": 33.189,
+  "raw": 33.18899917602539,
+  "rsi": 73.08,
+  "rsi_prev": 54.2,
   "signal": null,
-  "put_level": 33.4137,
-  "call_level": 32.2679
+  "put_level": 33.3763,
+  "call_level": 31.7515
  },
  "week": {
   "end": "2026-11-20",
@@ -17,8 +17,8 @@
   "dir": "up"
  },
  "version": "v1.0",
- "updated_at": "2026-11-27 04:31",
- "mode": "update",
+ "updated_at": "2026-11-27 16:05",
+ "mode": "daily",
  "params": {
   "rsi_n": 6,
   "up": 80,
